@@ -13,6 +13,8 @@ PODS:
 
 DEPENDENCIES:
   - composeApp (from `../composeApp`)
+  - PurchasesHybridCommon (= 13.21.0)
+  - PurchasesHybridCommonUI (= 13.21.0)
 
 SPEC REPOS:
   trunk:
@@ -32,6 +34,6 @@ SPEC CHECKSUMS:
   RevenueCat: e825836f5d6baa870c53d7281be25a5fd91abd91
   RevenueCatUI: f52648672be46e692955aab397a4a491f8aa196f
 
-PODFILE CHECKSUM: 5eb0b9ea576ca0ae4ffe1d12c1d1b05809c8ce91
+PODFILE CHECKSUM: 923f81faac8155e807d61c1850fc5129b7974e35
 
 COCOAPODS: 1.16.2

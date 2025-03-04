@@ -46,16 +46,18 @@ kotlin {
         pod("PurchasesHybridCommon") {
             version = libs.versions.purchases.common.get()
             extraOpts += listOf("-compiler-option", "-fmodules")
+            linkOnly = true
         }
 
         pod("PurchasesHybridCommonUI") {
             version = libs.versions.purchases.common.get()
             extraOpts += listOf("-compiler-option", "-fmodules")
+            linkOnly = true
         }
 
         framework {
             baseName = "ComposeApp"
-            isStatic = false
+            isStatic = true
             freeCompilerArgs += "-Xbinary=bundleId=com.plusmobileapps.kmp.samples.revenuecat"
         }
     }

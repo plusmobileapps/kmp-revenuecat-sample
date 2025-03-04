@@ -8,9 +8,12 @@ target 'iosApp' do
 
   # Pods for iosApp
   pod 'composeApp', :path => '../composeApp'
+  pod 'PurchasesHybridCommon', '13.21.0'
+  pod 'PurchasesHybridCommonUI', '13.21.0'
+
   post_install do |installer|
     installer.pods_project.targets.each do |target|
-      if target.name == 'shared'
+      if target.name == 'composeApp'
         target.build_configurations.each do |config|
           config.build_settings.delete('ASSETCATALOG_COMPILER_APPICON_NAME')
         end
