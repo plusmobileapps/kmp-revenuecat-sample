@@ -19,6 +19,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.buildKonfig)
+    alias(libs.plugins.cocoapods)
 }
 
 kotlin {
@@ -28,20 +29,40 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
-    
+
     listOf(
         iosX64(),
         iosArm64(),
         iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
+    )
+
+    cocoapods {
+        version = "1.0"
+        summary = "Revenue Cat KMP Sample"
+        homepage = "https://revenuecatkmpt.plusmobileapps.com"
+
+        ios.deploymentTarget = "16.0"
+        podfile = project.file("../iosApp/Podfile")
+
+        pod("PurchasesHybridCommon") {
+            version = libs.versions.purchases.common.get()
+            extraOpts += listOf("-compiler-option", "-fmodules")
+        }
+
+        pod("PurchasesHybridCommonUI") {
+            version = libs.versions.purchases.common.get()
+            extraOpts += listOf("-compiler-option", "-fmodules")
+        }
+
+        framework {
             baseName = "ComposeApp"
-            isStatic = true
+            isStatic = false
+            freeCompilerArgs += "-Xbinary=bundleId=com.plusmobileapps.kmp.samples.revenuecat"
         }
     }
-    
+
     sourceSets {
-        
+
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
@@ -105,5 +126,6 @@ buildkonfig {
                 "REVENUECAT_IOS_API_KEY",
                 localProperties.getProperty("REVENUECAT_IOS_API_KEY") as String? ?: ""
             )
-        }    }
+        }
+    }
 }
