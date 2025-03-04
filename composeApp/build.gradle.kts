@@ -1,12 +1,24 @@
+import com.codingfeline.buildkonfig.compiler.FieldSpec
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.io.FileInputStream
+import java.util.Properties
+
+val localProperties = Properties().apply {
+    val localPropertiesFile = rootProject.file("local.properties")
+    if (localPropertiesFile.exists()) {
+        load(FileInputStream(localPropertiesFile))
+    }
+}
+
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.buildKonfig)
 }
 
 kotlin {
@@ -78,3 +90,20 @@ dependencies {
     debugImplementation(compose.uiTooling)
 }
 
+buildkonfig {
+    packageName = "com.plusmobileapps.kmp.samples.revenuecat"
+
+    defaultConfigs {
+        defaultConfigs {
+            buildConfigField(
+                FieldSpec.Type.STRING,
+                "REVENUECAT_ANDROID_API_KEY",
+                localProperties.getProperty("REVENUECAT_ANDROID_API_KEY") as String? ?: ""
+            )
+            buildConfigField(
+                FieldSpec.Type.STRING,
+                "REVENUECAT_IOS_API_KEY",
+                localProperties.getProperty("REVENUECAT_IOS_API_KEY") as String? ?: ""
+            )
+        }    }
+}
